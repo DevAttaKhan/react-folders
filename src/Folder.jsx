@@ -1,7 +1,9 @@
 import React from "react";
 import { ReactComponent as FolderIcon } from "./assets/folder-regular.svg";
+import { ReactComponent as FolderActiveIcon } from "./assets/folder-open.svg";
 
 const Folder = ({ folder, handler,active }) => {
+    
   return (
     <div
       className="folder-box"
@@ -9,14 +11,15 @@ const Folder = ({ folder, handler,active }) => {
         e.stopPropagation();
         handler(folder);
       }}
+      
     >
-      <p className={folder.childrens ? `folder parent ${active.includes(folder.id) ? 'parent-active' : ''}` : "folder"}>
-        <FolderIcon /> {folder.name}
-      </p>
+      <button className={folder.childrens ? `folder parent ${active.includes(folder.folder_id) ? 'parent-active' : ''}` : "folder"}>
+        {active.includes(folder.folder_id) ? <FolderActiveIcon/> : <FolderIcon />} {folder.folder_name}
+      </button>
       {folder.childrens && (
         <div className="sub">
           {folder.childrens.map((el) => (
-            <Folder key={el.id} folder={el} handler={handler} active={active} />
+            <Folder key={el.folder_id} folder={el} handler={handler} active={active} />
           ))}
         </div>
       )}

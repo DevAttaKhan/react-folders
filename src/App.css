@@ -1,17 +1,55 @@
+header {
+  padding-inline: 39px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 20px;
+  background-color: #e44e4e;
+  color: white;
+  text-transform: capitalize;
+}
 
+header button {
+  outline: none;
+  padding: 10px 30px;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: bold;
+  color: inherit;
+  background-color: #ff8a8a;
+  text-transform: capitalize;
+  cursor: pointer;
+}
 
-.container{
+header form {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+header form input {
+  font-size: 18px;
+  padding: 10px;
+  height: 100%;
+  border-radius: 8px;
+  outline: none;
+  border: none;
+}
+.sidebar {
   max-width: 300px;
-  height: 500px;
+  width: 100%;
   border-right: 1px solid;
   padding: 20px;
   overflow-y: auto;
+  position: fixed;
+  left: 0;
+  top: 85px;
+  bottom: 0;
 }
 
-.mb-10{
+.mb-10 {
   margin-bottom: 10px;
 }
-.parent + .sub{
+.parent + .sub {
   max-width: 90% !important;
   margin-left: auto;
   max-height: 0;
@@ -20,19 +58,19 @@
 
 .parent-active + .sub {
   max-height: 400px;
-  transition: .3s;
+  transition: 0.3s;
   margin-top: 10px;
 }
-.folder-box{
+.folder-box {
   position: relative;
 }
-.folder{
+.folder {
+  width: 90%;
+  border: none;
   display: flex;
   align-items: center;
   gap: 10px;
   background: #ff8a8a;
-  max-width: 90%;
-  margin-left: 10px;
   padding-block: 10px;
   padding-left: 14px;
   color: #fff;
@@ -41,16 +79,87 @@
   cursor: pointer;
   text-transform: capitalize;
 }
-.folder:hover{
-  transition: .3s;
-  opacity: .9;
+
+.folder-actions {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e44e4e;
+}
+.folder-actions button {
+  border: none;
+  width: 90%;
+  background: #613f75;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 14px;
+  color: #fff;
+  border-radius: 6px;
+  line-height: 0;
+  cursor: pointer;
+  text-transform: capitalize;
+  font-size: 16px;
+  margin-bottom: 20px;
 }
 
-.folder-box svg{
+.creat-folder-input-wrapper input {
+  width: 90%;
+  font-size: 18px;
+  padding: 10px;
+  margin-block: 10px;
+  border-radius: 8px;
+}
+.creat-folder-input-wrapper button {
+  display: block;
+  min-height: 40px;
+  text-align: center;
+}
+
+.folder:hover,
+header button:hover,
+.folder-actions button:hover {
+  transition: 0.3s;
+  opacity: 0.9;
+}
+
+svg {
   width: 20px;
+  height: 20px;
   fill: #fff;
 }
 
-.folder-box:not(:last-child){
+.folder-box:not(:last-child) {
   margin-bottom: 10px;
+}
+
+.book-list {
+  width: calc(100% - 300px);
+  margin-left: auto;
+  padding: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.book {
+  max-width: 200px;
+  width: 100%;
+  height: 200px;
+  padding: 10px;
+  background-color: #b77156;
+  border-radius: 4px;
+  display: grid;
+  place-items: center;
+  font-size: 30px;
+  text-transform: capitalize;
+  color: #fff;
+  text-align: center;
+  font-weight: bold;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+
+.book:hover {
+  background-color: #e27347;
 }
