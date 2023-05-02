@@ -46,6 +46,9 @@ header form input {
   bottom: 0;
 }
 
+.sidebar.s-drageover,.f-drageover
+{box-shadow: 0 0 10px inset aqua;}
+
 .mb-10 {
   margin-bottom: 10px;
 }
@@ -78,6 +81,10 @@ header form input {
   line-height: 0;
   cursor: pointer;
   text-transform: capitalize;
+}
+
+.folder-active {
+ background:  #e44e4e;
 }
 
 .folder-actions {

@@ -31,26 +31,27 @@ function App() {
   }, []);
 
   const folderClickHandler = (folder) => {
-    if (openedFolders.includes(folder.folder_id)) {
-      setOpenedFolders((prev) => [
-        ...prev.filter((e) => e !== folder.folder_id),
-      ]);
-    } else
-      setOpenedFolders((prev) => [
-        ...prev.filter((e) => !["all", "uncategorized"].includes(e)),
-        folder.folder_id,
-      ]);
+    if (folder.childrens) {
+      if (openedFolders.includes(folder.folder_id)) {
+        setOpenedFolders((p) => p.filter((e) => e !== folder.folder_id));
+      } else
+        setOpenedFolders((prev) => [
+          ...prev.filter((e) => !["all", "uncategorized"].includes(e)),
+          folder.folder_id,
+        ]);
+    }
 
     setActiveFolder(folder.folder_id);
   };
 
   const rootFolderClickHandler = (folder) => {
-    setOpenedFolders([folder.folder_id]);
+    setOpenedFolders((p) => [...p, folder.folder_id]);
     setActiveFolder(folder.folder_id);
   };
 
   const handleBookSubmit = async (e) => {
     e.preventDefault();
+    if(!bookName) return;
 
     fetch("http://localhost:3001/books", {
       method: "POST",
@@ -171,16 +172,56 @@ function App() {
 
   const handleDragOver = (e) => {
     e.preventDefault();
+    if (e.target.classList.contains("sidebar")) {
+      e.target.classList.add("s-drageover");
+    } else if (e.target.classList.contains("folder")) {
+      e.currentTarget.classList.remove("s-drageover");
+
+      document
+        .querySelectorAll(".folder")
+        .forEach((el) => el.classList.remove("f-drageover"));
+
+      e.target.closest(".folder").classList.add("f-drageover");
+    }
   };
 
   const onDropHandler = async (e) => {
     e.preventDefault();
     const data = JSON.parse(e.dataTransfer.getData("text/plain"));
-    console.log(data);
+    document.querySelector(".sidebar").classList.remove("s-drageover");
+    document
+      .querySelectorAll(".folder")
+      .forEach((el) => el.classList.remove("f-drageover"));
+
+    if (["all", "uncategorized"].includes(e.target.dataset.folderid)) return;
+
+    const folderId = Number(e.target.dataset.folderid);
+    const bookId = data;
+
+    fetch("http://localhost:3001/books/move", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        bookId,
+        folderId,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => setBookList(data));
   };
 
   const onDragStart = (e, d) => {
     e.dataTransfer.setData("text/plain", JSON.stringify(d));
+  };
+
+  const handleDrageLeave = (e) => {
+    e.preventDefault();
+    document.querySelector(".sidebar").classList.remove("s-drageover");
+    document
+      .querySelectorAll(".folder")
+      .forEach((el) => el.classList.remove("f-drageover"));
   };
 
   return (
@@ -208,6 +249,7 @@ function App() {
             className="sidebar"
             onDrop={onDropHandler}
             onDragOver={handleDragOver}
+            onDragLeave={handleDrageLeave}
           >
             <div className="folder-actions">
               <button onClick={() => setFolderInput((p) => !p)}>
@@ -232,15 +274,17 @@ function App() {
             <Folder
               folder={{ folder_name: "All books", folder_id: "all" }}
               handler={rootFolderClickHandler}
-              active={openedFolders}
+              openedFolders={openedFolders}
+              activeFolder={activeFolder}
             />
             {folders &&
               folders.map((folder) => (
                 <Folder
-                  active={openedFolders}
+                  openedFolders={openedFolders}
                   key={folder.folder_id}
                   folder={folder}
                   handler={folderClickHandler}
+                  activeFolder={activeFolder}
                 />
               ))}
           </div>
