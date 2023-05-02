@@ -33,7 +33,7 @@ function App() {
   const folderClickHandler = (folder) => {
     if (folder.childrens) {
       if (openedFolders.includes(folder.folder_id)) {
-        setOpenedFolders((p) => p.filter((e) => e !== folder.folder_id));
+        setOpenedFolders((p) => p.filter((e) => !["all", "uncategorized"].includes(e)).filter((e) => e !== folder.folder_id));
       } else
         setOpenedFolders((prev) => [
           ...prev.filter((e) => !["all", "uncategorized"].includes(e)),
