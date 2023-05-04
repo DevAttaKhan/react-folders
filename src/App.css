@@ -42,12 +42,12 @@ header form input {
   overflow-y: auto;
   position: fixed;
   left: 0;
-  top: 85px;
+  top: 89px;
   bottom: 0;
 }
 
 .sidebar.s-drageover,.f-drageover
-{box-shadow: 0 0 10px inset aqua;}
+{box-shadow: 0 0 0 3px inset #8AFFFF;}
 
 .mb-10 {
   margin-bottom: 10px;
