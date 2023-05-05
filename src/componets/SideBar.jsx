@@ -5,15 +5,19 @@ import { useSelector, useDispatch } from "react-redux";
 import { ReactComponent as PlusIcon } from "../assets/plus-solid.svg";
 import { ReactComponent as TrashIcon } from "../assets/trash-solid.svg";
 import { setFolderInput, setOpenedFolders } from "../store/uiSlice";
+import { moveBook } from "../store/bookSlice";
+import {
+  createFolder,
+  deleteFolder,
+  fetchAllFolders,
+} from "../store/folderSlice";
 
 const SideBar = () => {
-  const { activeFolder, folderInput, openedFolders } = useSelector(
-    (state) => state.ui
-  );
+  const store = useSelector((state) => state);
+  const { activeFolder, folderInput, openedFolders } = store.ui;
+  const { foldersList } = store.folders;
   const dispatch = useDispatch();
   const [newFolder, setNewFolder] = useState("");
-
-  const [folders, setFolders] = useState([]);
   //   const [openedFolders, setOpenedFolders] = useState([]);
 
   async function readDirectory(directory) {
@@ -77,21 +81,7 @@ const SideBar = () => {
     const folderId = Number(e.target.dataset.folderid);
     const bookId = data;
 
-    fetch("http://localhost:3001/books/move", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        bookId,
-        folderId,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("hi");
-        // setBookList(data)
-      });
+    dispatch(moveBook({ folderId, bookId }));
   };
 
   const folderClickHandler = (folder) => {
@@ -115,39 +105,16 @@ const SideBar = () => {
   };
 
   const OnCreateNewFolder = async () => {
-    fetch("http://localhost:3001/folders", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        folderName: newFolder,
-        parentFolder: ["all", "uncategorized"].includes(activeFolder)
-          ? null
-          : activeFolder,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setFolders(data);
-        setNewFolder("");
-        dispatch(setFolderInput(false));
-      });
+    dispatch(
+      createFolder({ parentFolder: activeFolder, folderName: newFolder })
+    ).then((p) => {
+      setNewFolder("");
+      dispatch(setFolderInput(false));
+    });
   };
 
   const onDeleteFolder = async () => {
-    if (["all", "uncategorized"].includes(setActiveFolder)) return;
-    fetch(`http://localhost:3001/folders/${activeFolder}`, {
-      method: "delete",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        // getAllBooks();
-        setFolders(data);
-      });
+    dispatch(deleteFolder());
   };
 
   const handleDrageLeave = (e) => {
@@ -159,12 +126,8 @@ const SideBar = () => {
   };
 
   useEffect(() => {
-    fetch("http://localhost:3001/folders")
-      .then((res) => res.json())
-      .then((data) => {
-        setFolders(data);
-      });
-  }, []);
+    dispatch(fetchAllFolders());
+  }, [dispatch]);
 
   return (
     <div
@@ -199,8 +162,8 @@ const SideBar = () => {
         openedFolders={openedFolders}
         activeFolder={activeFolder}
       />
-      {folders &&
-        folders.map((folder) => (
+      {foldersList &&
+        foldersList.map((folder) => (
           <Folder
             openedFolders={openedFolders}
             key={folder.folder_id}

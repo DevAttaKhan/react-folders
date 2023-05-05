@@ -9,9 +9,29 @@ export const fetchAllBooks = createAsyncThunk(
   }
 );
 
+export const moveBook = createAsyncThunk(
+  "book/moveBook",
+  async ({folderId, bookId}, { dispatch }) => {
+    console.log('moved')
+    const res = await fetch("http://localhost:3001/books/move", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        bookId,
+        folderId,
+      }),
+    });
+    const data = await res.json();
+    return data;
+  }
+);
+
 export const postBook = createAsyncThunk(
   "book/postBook",
   async (bookName, { dispatch, getState }) => {
+
     const {
       ui: { activeFolder },
     } = getState();
@@ -54,6 +74,10 @@ export const bookSlice = createSlice({
     },
     [postBook.fulfilled]: (state, action) => {
       state.bookList = action.payload;
+    },
+
+    [moveBook.fulfilled]: (state, { payload }) => {
+      state.bookList = payload;
     },
   },
 });
