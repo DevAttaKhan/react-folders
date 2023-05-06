@@ -85,6 +85,5 @@ export const folderSlice = createSlice({
   },
 });
 
-export const {} = folderSlice.actions;
 
 export default folderSlice.reducer;

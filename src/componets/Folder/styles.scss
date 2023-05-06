@@ -1,0 +1,105 @@
+.folder-box {
+  position: relative;
+
+  .folder {
+    width: 90%;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #ff8a8a;
+    padding-block: 10px;
+    padding-left: 14px;
+    color: #fff;
+    border-radius: 6px;
+    line-height: 0;
+    cursor: pointer;
+    text-transform: capitalize;
+
+  
+
+    &.parent+.sub {
+      max-width: 90% !important;
+      margin-left: auto;
+      max-height: 0;
+      overflow: hidden;
+    }
+
+    &.parent-active+.sub {
+      max-height: 400px;
+      transition: 0.3s;
+      margin-top: 10px;
+    }
+
+    &.folder-active {
+      background: #e44e4e;
+    }
+  }
+
+  &:not(:last-child) {
+    margin-bottom: 10px;
+  }
+
+}
+
+
+
+
+
+
+.creat-folder-input-wrapper input {
+  width: 90%;
+  font-size: 18px;
+  padding: 10px;
+  margin-block: 10px;
+  border-radius: 8px;
+}
+
+.creat-folder-input-wrapper button {
+  display: block;
+  min-height: 40px;
+  text-align: center;
+}
+
+
+
+
+
+
+
+.folder-actions {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e44e4e;
+}
+
+.folder-actions button {
+  border: none;
+  width: 90%;
+  background: #613f75;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 14px;
+  color: #fff;
+  border-radius: 6px;
+  line-height: 0;
+  cursor: pointer;
+  text-transform: capitalize;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+
+
+.folder:hover,
+header button:hover,
+.folder-actions button:hover {
+  transition: 0.3s;
+  opacity: 0.9;
+}
+
+
+
+ 

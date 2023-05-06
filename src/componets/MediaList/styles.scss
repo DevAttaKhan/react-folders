@@ -1,0 +1,11 @@
+
+.media-list {
+    padding: 30px;
+    padding-top: 135px;
+    width: calc(100% - 300px);
+    margin-left: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+    place-items: start;
+    gap: 20px;
+  }

@@ -1,0 +1,41 @@
+header {
+  padding-inline: 39px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 20px;
+  background-color: #e44e4e;
+  color: white;
+  text-transform: capitalize;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+
+  button {
+    outline: none;
+    padding: 10px 30px;
+    border-radius: 8px;
+    font-size: 20px;
+    font-weight: bold;
+    color: inherit;
+    background-color: #ff8a8a;
+    text-transform: capitalize;
+    cursor: pointer;
+  }
+
+  form {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    input {
+      font-size: 18px;
+      padding: 10px;
+      height: 100%;
+      border-radius: 8px;
+      outline: none;
+      border: none;
+    }
+  }
+}

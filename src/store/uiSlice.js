@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  addBookInput: false,
+  addmediaInput: false,
   activeFolder: "all",
   folderInput: false,
   openedFolders: [],
@@ -11,8 +11,8 @@ export const uiSlice = createSlice({
   name: "ui",
   initialState,
   reducers: {
-    setAddBookInput: (state, action) => {
-      state.addBookInput = action.payload;
+    setAddMediaInput: (state, action) => {
+      state.addmediaInput = action.payload;
     },
     setActiveFolder: (state, { payload }) => {
       state.activeFolder = payload;
@@ -51,7 +51,7 @@ export const uiSlice = createSlice({
 });
 
 export const {
-  setAddBookInput,
+  setAddMediaInput,
   setActiveFolder,
   setFolderInput,
   setOpenedFolders,

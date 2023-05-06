@@ -1,0 +1,17 @@
+
+.sidebar {
+    max-width: 300px;
+    width: 100%;
+    border-right: 1px solid;
+    padding: 20px;
+    overflow-y: auto;
+    position: fixed;
+    left: 0;
+    top: 89px;
+    bottom: 0;
+  }
+  
+  .sidebar.s-drageover,.f-drageover
+  {box-shadow: 0 0 0 3px inset #8AFFFF;}
+  
+ 

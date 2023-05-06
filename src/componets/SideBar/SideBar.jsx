@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from "react";
-import Folder from "../Folder";
-import { setActiveFolder } from "../store/uiSlice";
+import React, { useState, useEffect } from "react"; 
 import { useSelector, useDispatch } from "react-redux";
-import { ReactComponent as PlusIcon } from "../assets/plus-solid.svg";
-import { ReactComponent as TrashIcon } from "../assets/trash-solid.svg";
-import { setFolderInput, setOpenedFolders } from "../store/uiSlice";
-import { moveBook } from "../store/bookSlice";
+import { ReactComponent as PlusIcon } from "../../assets/plus-solid.svg";
+import { ReactComponent as TrashIcon } from "../../assets/trash-solid.svg";
+import { setFolderInput, setOpenedFolders, setActiveFolder } from "../../store/uiSlice";
+import { moveMedia } from "../../store/mediaSlice";
 import {
   createFolder,
   deleteFolder,
   fetchAllFolders,
-} from "../store/folderSlice";
+} from "../../store/folderSlice";
+import Folder from "../Folder/Folder";
+
+import './styles.scss'
 
 const SideBar = () => {
   const store = useSelector((state) => state);
@@ -79,9 +80,9 @@ const SideBar = () => {
     if (["all", "uncategorized"].includes(e.target.dataset.folderid)) return;
 
     const folderId = Number(e.target.dataset.folderid);
-    const bookId = data;
+    const mediaId = data;
 
-    dispatch(moveBook({ folderId, bookId }));
+    dispatch(moveMedia({ folderId, mediaId }));
   };
 
   const folderClickHandler = (folder) => {
@@ -115,6 +116,7 @@ const SideBar = () => {
 
   const onDeleteFolder = async () => {
     dispatch(deleteFolder());
+    dispatch(setActiveFolder(null))
   };
 
   const handleDrageLeave = (e) => {
@@ -157,7 +159,7 @@ const SideBar = () => {
         )}
       </div>
       <Folder
-        folder={{ folder_name: "All books", folder_id: "all" }}
+        folder={{ folder_name: "All medias", folder_id: "all" }}
         handler={rootFolderClickHandler}
         openedFolders={openedFolders}
         activeFolder={activeFolder}

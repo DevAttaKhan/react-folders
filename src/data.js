@@ -19,7 +19,7 @@ export const folderList = [
     childrens: [
       {
         id: uuid(),
-        name: "books",
+        name: "medias",
       },
       {
         id: uuid(),

@@ -1,6 +1,6 @@
 import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import Header from "./componets/Header";
+import Header from "./componets/Header/Header";
 
 const ProtectedRoutes = () => {
   const token = true;

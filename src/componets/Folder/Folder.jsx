@@ -1,6 +1,8 @@
 import React from "react";
-import { ReactComponent as FolderIcon } from "./assets/folder-regular.svg";
-import { ReactComponent as FolderActiveIcon } from "./assets/folder-open.svg";
+import { ReactComponent as FolderIcon } from "../../assets/folder-regular.svg";
+import { ReactComponent as FolderActiveIcon } from "../../assets/folder-open.svg";
+
+import './styles.scss'
 
 const Folder = ({ folder, handler,openedFolders, activeFolder }) => {
 const isActive = folder.folder_id === activeFolder ? "folder-active" : ''
