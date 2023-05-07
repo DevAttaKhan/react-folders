@@ -1,9 +1,13 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import "./styles.scss";
+import { logIn } from "../../store/authSlice";
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -15,7 +19,11 @@ const Login = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log(user);
+    dispatch(logIn(user)).then(({ meta }) => {
+      if (meta.requestStatus === "fulfilled") {
+        navigate("/", { replace: true });
+      }
+    });
   };
   return (
     <section className="auth" onSubmit={submitHandler}>

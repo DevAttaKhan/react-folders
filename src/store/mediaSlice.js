@@ -2,8 +2,16 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const fetchAllMedias = createAsyncThunk(
   "medias/fetchAllMedias",
-  async () => {
-    const res = await fetch("http://localhost:3001/medias");
+  async (args, { getState }) => {
+    const {
+      auth: { user },
+    } = getState();
+    const res = await fetch("http://localhost:3001/medias", {
+      method: "GET",
+      headers: {
+        authorization: `Bearer ${user.token}`,
+      },
+    });
     const medias = res.json();
     return medias;
   }
@@ -11,12 +19,15 @@ export const fetchAllMedias = createAsyncThunk(
 
 export const moveMedia = createAsyncThunk(
   "media/moveMedia",
-  async ({folderId, mediaId}, { dispatch }) => {
-    console.log('moved')
+  async ({ folderId, mediaId }, { dispatch, getState }) => {
+    const {
+      auth: { user },
+    } = getState();
     const res = await fetch("http://localhost:3001/medias/move", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        authorization: `Bearer ${user.token}`,
       },
       body: JSON.stringify({
         mediaId,
@@ -31,14 +42,15 @@ export const moveMedia = createAsyncThunk(
 export const createMedia = createAsyncThunk(
   "media/createMedia",
   async (mediaName, { dispatch, getState }) => {
-
     const {
       ui: { activeFolder },
+      auth: { user },
     } = getState();
     const res = await fetch("http://localhost:3001/medias", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        authorization: `Bearer ${user.token}`,
       },
       body: JSON.stringify({
         mediaName,

@@ -1,12 +1,17 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import "./styles.scss";
+import { useDispatch } from "react-redux";
+import { singIn } from "../../store/authSlice";
 
 const SignUp = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [user, setUser] = useState({
     firstName: "",
     lastName: "",
+    username: "",
     email: "",
     password: "",
   });
@@ -17,7 +22,11 @@ const SignUp = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log(user);
+    dispatch(singIn(user)).then(({ meta }) => {
+      if (meta.requestStatus === "fulfilled") {
+        navigate("/", { replace: true });
+      }
+    });
   };
   return (
     <section className="auth">
@@ -48,15 +57,27 @@ const SignUp = () => {
               />
             </div>
           </div>
-          <div className="auth__form-controll">
-            <label>Email</label>
-            <input
-              type="email"
-              name="email"
-              placeholder="Enter Your Eamil"
-              onChange={onChangeHandler}
-              value={user.email}
-            />
+          <div className="auth__form-wrapper">
+            <div className="auth__form-controll">
+              <label>Email</label>
+              <input
+                type="email"
+                name="email"
+                placeholder="Enter Your Eamil"
+                onChange={onChangeHandler}
+                value={user.email}
+              />
+            </div>
+            <div className="auth__form-controll">
+              <label>Username</label>
+              <input
+                type="text"
+                name="username"
+                placeholder="Enter Your Username"
+                onChange={onChangeHandler}
+                value={user.username}
+              />
+            </div>
           </div>
           <div className="auth__form-controll">
             <label>password</label>
