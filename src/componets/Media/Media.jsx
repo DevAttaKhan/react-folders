@@ -1,7 +1,7 @@
 import React from "react";
-import './styles.scss'
+import "./styles.scss";
 
-const Media = ({ mediaId, mediaName, onDragStart }) => {
+const Media = ({ mediaId, mediaName, mediaUrl, onDragStart }) => {
   return (
     <div
       className="media"
@@ -9,7 +9,7 @@ const Media = ({ mediaId, mediaName, onDragStart }) => {
       data-draggable-id={mediaId}
       onDragStart={(e) => onDragStart(e, mediaId)}
     >
-      {mediaName}
+      <img src={mediaUrl} alt={mediaName} />
     </div>
   );
 };

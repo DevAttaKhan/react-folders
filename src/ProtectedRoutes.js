@@ -5,24 +5,24 @@ import { useSelector, useDispatch } from "react-redux";
 import { setStoredUser } from "./store/authSlice";
 
 const ProtectedRoutes = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
 
-  const storedUser = user || JSON.parse(window.localStorage.getItem("user"));
+  // const storedUser = user || JSON.parse(window.localStorage.getItem("user"));
 
-  useEffect(() => {
-    if (user) {
-      window.localStorage.setItem("user", JSON.stringify(user));
-    }
-    if (!user) {
-      dispatch(setStoredUser(storedUser));
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (user) {
+  //     window.localStorage.setItem("user", JSON.stringify(user));
+  //   }
+  //   if (!user) {
+  //     dispatch(setStoredUser(storedUser));
+  //   }
+  // }, []);
 
   return (
     <>
       <Header />
-      {storedUser?.token ? <Outlet /> : <Navigate to="/login" replace={true} />}
+      {user?.token ? <Outlet /> : <Navigate to="/login" replace={true} />}
     </>
   );
 };

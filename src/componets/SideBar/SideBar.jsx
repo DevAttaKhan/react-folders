@@ -79,7 +79,7 @@ const SideBar = () => {
 
     if (["all", "uncategorized"].includes(e.target.dataset.folderid)) return;
 
-    const folderId = Number(e.target.dataset.folderid);
+    const folderId = e.target.dataset.folderid;
     const mediaId = data;
 
     dispatch(moveMedia({ folderId, mediaId }));

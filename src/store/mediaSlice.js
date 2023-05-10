@@ -41,23 +41,22 @@ export const moveMedia = createAsyncThunk(
 
 export const createMedia = createAsyncThunk(
   "media/createMedia",
-  async (mediaName, { dispatch, getState }) => {
+  async (files, { dispatch, getState }) => {
     const {
       ui: { activeFolder },
       auth: { user },
     } = getState();
+    const formData = new FormData();
+    for (let i = 0; i < files.length; i++) {
+      formData.append("file", files[i]);
+    }
+    formData.append("folderId", activeFolder === "all" ? null : activeFolder);
     const res = await fetch("http://localhost:3001/medias", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
         authorization: `Bearer ${user.token}`,
       },
-      body: JSON.stringify({
-        mediaName,
-        folderId: ["all", "uncategorized"].includes(activeFolder)
-          ? null
-          : activeFolder,
-      }),
+      body: formData,
     });
     const data = res.json();
     return data;
