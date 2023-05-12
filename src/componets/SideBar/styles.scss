@@ -1,14 +1,14 @@
 
 .sidebar {
     max-width: 300px;
-    width: 100%;
-    border-right: 1px solid;
+    width: 100%; 
     padding: 20px;
     overflow-y: auto;
     position: fixed;
     left: 0;
-    top: 89px;
+    top: 62px;
     bottom: 0;
+    background-color: rgba(#e44e4e, .1);
   }
   
   .sidebar.s-drageover,.f-drageover

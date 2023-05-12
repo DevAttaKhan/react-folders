@@ -1,41 +1,38 @@
-import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { setAddMediaInput } from "../../store/uiSlice";
+import React, { useState, useRef } from "react";
+import { useDispatch } from "react-redux";
 import { createMedia } from "../../store/mediaSlice";
-
-import './styles.scss'
+import { ReactComponent as IconPlus } from "../../assets/plus-solid.svg";
+import "./styles.scss";
 
 const Header = () => {
-  const { addmediaInput } = useSelector((state) => state.ui);
   const dispatch = useDispatch();
-  const [mediaName, setmediaName] = useState("");
+  const fileRef = useRef();
 
-  const handlemediaSubmit = async (e) => {
-    e.preventDefault();
-    if (!mediaName) return;
-    dispatch(createMedia(mediaName));
-    dispatch(setAddMediaInput(false))
+  const handleSelectFile = () => {
+    fileRef?.current.click();
+  };
+
+  const onSelectMedia = async (e) => {
+    const files = e.target?.files;
+    dispatch(createMedia(files));
   };
 
   return (
     <header>
       <h1>media library</h1>
-      {addmediaInput && (
-        <form onSubmit={handlemediaSubmit}>
-          <input
-            type="text"
-            placeholder="Enter Your media Name"
-            onChange={(e) => setmediaName(e.target.value)}
-            value={mediaName}
-          />
-          <button type="submit">confirm</button>
-        </form>
-      )}
-      {!addmediaInput && (
-        <button onClick={() => dispatch(setAddMediaInput(true))}>
-          add media
+
+      <label>
+        <button onClick={handleSelectFile}>
+          <IconPlus />
         </button>
-      )}
+        <input
+          type="file"
+          name="file"
+          ref={fileRef}
+          multiple
+          onChange={onSelectMedia}
+        />
+      </label>
     </header>
   );
 };

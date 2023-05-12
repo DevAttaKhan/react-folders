@@ -77,7 +77,7 @@ const SideBar = () => {
       .querySelectorAll(".folder")
       .forEach((el) => el.classList.remove("f-drageover"));
 
-    if (["all", "uncategorized"].includes(e.target.dataset.folderid)) return;
+    // if (["all", "uncategorized"].includes(e.target.dataset.folderid)) return;
 
     const folderId = e.target.dataset.folderid;
     const mediaId = data;

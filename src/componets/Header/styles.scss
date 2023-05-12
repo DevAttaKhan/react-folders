@@ -3,7 +3,7 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-block: 20px;
+  padding-block: 10px;
   background-color: #e44e4e;
   color: white;
   text-transform: capitalize;
@@ -12,30 +12,31 @@ header {
   right: 0;
   top: 0;
 
+  h1{
+    font-size: 22px;
+  }
+
   button {
     outline: none;
-    padding: 10px 30px;
-    border-radius: 8px;
+    border: none;
+    width: 100px;
+    height: 42px;
+    display: grid;
+    place-items: center;
     font-size: 20px;
     font-weight: bold;
     color: inherit;
     background-color: #ff8a8a;
     text-transform: capitalize;
     cursor: pointer;
-  }
-
-  form {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-
-    input {
-      font-size: 18px;
-      padding: 10px;
-      height: 100%;
-      border-radius: 8px;
-      outline: none;
-      border: none;
+    svg{
+      width: 30px;
+      height: 30px;
     }
   }
+ 
+
+    input {
+     display: none;
+    }
 }

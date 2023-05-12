@@ -15,13 +15,15 @@ button {
 
 body {
   margin: 0;
-  font-family: "Roboto Slab", serif;
+  // font-family: "Roboto Slab", serif;
+  font-family: 'Poppins';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height: 100%;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
+$mimi-pink: #ffd6ffff;
+$mauve: #e7c6ffff;
+$mauve-2: #c8b6ffff;
+$periwinkle: #b8c0ffff;
+$periwinkle-2: #bbd0ffff;

@@ -31,7 +31,7 @@ export const moveMedia = createAsyncThunk(
       },
       body: JSON.stringify({
         mediaId,
-        folderId,
+        folderId: ["all", "uncategorized"].includes(folderId) ? null : folderId,
       }),
     });
     const data = await res.json();
