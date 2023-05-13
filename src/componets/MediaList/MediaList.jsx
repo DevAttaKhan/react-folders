@@ -63,24 +63,24 @@ const MediaList = () => {
   const rendermedias = (medias, onDragStart) => {
     let content = [];
     if (activeFolder === "all") {
-      content = medias.map(({ media_id, media_name, media_url }, i) => (
+      content = medias.map(({ media_id, media_name, thumbnail }, i) => (
         <Media
           key={media_id}
           mediaId={media_id}
           mediaName={media_name}
-          mediaUrl={media_url}
+          thumbnail={thumbnail}
           onDragStart={onDragStart}
         />
       ));
     } else {
       content = medias
         .filter((media) => media.folder_id === activeFolder)
-        .map(({ media_id, media_name, media_url }) => (
+        .map(({ media_id, media_name, thumbnail }) => (
           <Media
             key={media_id}
             mediaId={media_id}
             mediaName={media_name}
-            mediaUrl={media_url}
+            thumbnail={thumbnail}
             onDragStart={onDragStart}
           />
         ));
