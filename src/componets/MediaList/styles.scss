@@ -1,5 +1,8 @@
 .media-list {
- height: 100vh;
+  height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+
   .media-list-wrapper {
     padding: 30px;
     padding-top: 75px;
@@ -9,5 +12,33 @@
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     place-items: start;
     gap: 20px;
+  }
+}
+
+.context-menu {
+  visibility: hidden;
+  width: 200px;
+  height: 500px;
+  background-color: red;
+  position: absolute;
+  z-index: 99;
+  overflow: hidden;
+
+  &.active {
+    visibility: visible;
+    animation: scale-up .08s linear 0s 1 normal none;
+  }
+}
+
+
+@keyframes scale-up {
+
+  0% {
+    transform: scaleY(0);
+
+  }
+
+  100% {
+    transform: scaleY(1);
   }
 }

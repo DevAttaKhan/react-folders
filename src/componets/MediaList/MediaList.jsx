@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { createMedia, fetchAllMedias } from "../../store/mediaSlice";
 import Media from "../Media/Media";
@@ -9,6 +9,12 @@ const MediaList = () => {
   const { mediaList } = useSelector((state) => state.medias);
   const { activeFolder } = useSelector((state) => state.ui);
   const dispatch = useDispatch();
+  const [menu, setMenu] = useState(false);
+  const [position, setPosition] = useState({
+    top: 300,
+    left: 200,
+  });
+  const contextMenuRef = useRef();
   useEffect(() => {
     dispatch(fetchAllMedias());
   }, [dispatch]);
@@ -53,7 +59,7 @@ const MediaList = () => {
   const handleDrop = async (e) => {
     e.nativeEvent.preventDefault();
     const items = e.dataTransfer.items[0];
-  
+
     const directory = items.webkitGetAsEntry();
     const files = await readDirectory(directory);
 
@@ -91,15 +97,87 @@ const MediaList = () => {
     e.dataTransfer.setData("text/plain", JSON.stringify(d));
   };
 
+  const showCotextMenu = (e) => {
+    const screenH = window.innerHeight;
+    const screenW = window.innerWidth;
+    const menuDimensions = contextMenuRef.current.getBoundingClientRect();
+
+    if (
+      e.clientY + menuDimensions.height > screenH &&
+      menuDimensions.height < e.clientY
+    ) {
+      console.log(menuDimensions);
+      let pos = { bottom: screenH - e.clientY };
+      e.clientX + menuDimensions.width > screenW
+        ? (pos.right = screenW - e.clientX)
+        : (pos.left = e.clientX);
+      setPosition(() => pos);
+      setMenu(true);
+    } else if (
+      menuDimensions.height > e.clientY &&
+      e.clientY + menuDimensions.height > screenH
+    ) {
+      let pos = { bottom: 0 };
+      e.clientX + menuDimensions.width > screenW
+        ? (pos.right = screenW - e.clientX)
+        : (pos.left = e.clientX);
+
+      setPosition(() => pos);
+      setMenu(true);
+    } else if (
+      e.clientY < menuDimensions.height &&
+      e.clientX + menuDimensions.width < screenW
+    ) {
+      //top left to top center
+      let pos = { top: e.clientY };
+      e.clientX + menuDimensions.width > screenW
+        ? (pos.right = screenW - e.clientX)
+        : (pos.left = e.clientX);
+      setPosition(() => pos);
+      setMenu(true);
+    } else if (
+      e.clientY < menuDimensions.height &&
+      e.clientX + menuDimensions.width > screenW
+    ) {
+      setPosition(() => ({
+        top: e.clientY,
+        right: screenW - e.clientX,
+      }));
+      setMenu(true);
+    }
+  };
+
+  const handleRightClick = (e) => {
+    e.preventDefault();
+    showCotextMenu(e); 
+  };
+
+  useEffect(() => {
+    window.addEventListener("click", (e) => {
+      if (menu) {
+        setMenu(false);
+      }
+    });
+  }, [menu]);
   return (
-    <div className="media-list" onDragOver={handleDragover} onDrop={handleDrop}>
+    <div
+      className="media-list"
+      onDragOver={handleDragover}
+      onDrop={handleDrop}
+      onContextMenu={handleRightClick}
+    >
       <div className="media-list-wrapper">
-      {rendermedias(mediaList).length ? (
-        rendermedias(mediaList, onDragStart)
-      ) : (
-        <h2>No medias Yet</h2>
-      )}
+        {rendermedias(mediaList).length ? (
+          rendermedias(mediaList, onDragStart)
+        ) : (
+          <h2>No medias Yet</h2>
+        )}
       </div>
+      <div
+        className={menu ? "context-menu active" : "context-menu"}
+        style={position}
+        ref={contextMenuRef}
+      ></div>
     </div>
   );
 };
